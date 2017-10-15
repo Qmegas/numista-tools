@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name       Numista usefull tools
 // @namespace  http://qmegas.info/numista
-// @version    0.4
+// @version    0.5.1
 // @description  Adds some additional tools for Numista
-// @include    http://en.numista.com/catalogue/*
-// @include    http://en.numista.com/echanges/*
+// @include    https://en.numista.com/catalogue/*
+// @include    https://en.numista.com/echanges/*
 // @copyright  Megas (qmegas.info)
 //
-// @require    http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
+// @require    https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js
 //
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -84,9 +84,9 @@
 		}
 		
 		function drawFilters() {
-			var $form = $("#form_recherche tfoot tr");
+			var $form = $("#search_type_option");
 
-			if ($form.length == 0) {
+			if ($form.length === 0) {
 				return;
 			}
 
@@ -99,13 +99,13 @@
 					'<label class="qmegas-label"><input type="checkbox" id="qmegas_filter_gold" data-var="filter_gold" ' + f_gold + 
 					'> Hide gold coins</label>' +
 					'</div>';
-			$form.eq(1).find("td").append(html);
+			$form.append(html);
 
 			$("#qmegas_filter_silver, #qmegas_filter_gold").click(function() {
 				var $this = $(this),
 					type = $this.attr("data-var"),
 					val = $this.is(":checked");
-				settings.set(type, val)
+				settings.set(type, val);
 				applyFilters();
 			});
 		}
@@ -158,7 +158,7 @@
 			var $this = $(this), id = $this.attr('data-id');
 			var $parent = $this.parents('.qmegas-info-box');
 			
-			$.post('http://qmegas.info/numista-api/coin/' + id + '/', function(data){
+			$.post('https://qmegas.info/numista-api/coin/' + id + '/', function(data){
 				var metal = data.metal || '', index = '?';
 				if (data.rarity_index) {
 					index = data.rarity_index;
@@ -189,7 +189,7 @@
 	
 	$(function() {
 		settings.init();
-        searchFilter.init();
+        	searchFilter.init();
 		coinInfo.init();
 	});
 })(jQuery);
